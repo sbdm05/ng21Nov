@@ -1,0 +1,37 @@
+<!-- ossature du site -->
+<!-- ensemble de balises html -->
+<header class="fixed-top">
+
+  <!-- ajouter un bouton
+  au clic on ajoute/ on enlève une class close-aside à la balise main
+  -->
+  <!-- on veut projeter le bouton depuis le parent -->
+  <!-- ici, on entoure la méthode avec une balise span pour garder l'événément fonctionnel -->
+<span (click)='toggle()'>
+  <ng-content select='.tr-btn'></ng-content>
+</span>
+
+  <!-- ici on va projeter du contenu depuis le parent
+ c'est à dire app.component.html
+  -->
+  <!-- transclusion = projection de contenu -->
+  <ng-content select='.tr-header'></ng-content>
+</header>
+
+<main [ngClass]="{'close-aside' : !open}">
+  <div class="shadow position-fixed">
+  </div>
+  <aside>
+    <div class="scroller">
+      <ng-content select='.tr-nav'></ng-content>
+    </div>
+  </aside>
+  <div class="page">
+    <div class="contents">
+      Content
+    </div>
+    <footer>
+      <ng-content select='.tr-footer'></ng-content>
+    </footer>
+  </div>
+</main>
