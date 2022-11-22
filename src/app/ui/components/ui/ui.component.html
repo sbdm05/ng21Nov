@@ -8,8 +8,11 @@
   <!-- on veut projeter le bouton depuis le parent -->
   <!-- ici, on entoure la méthode avec une balise span pour garder l'événément fonctionnel -->
 <span (click)='toggle()'>
-  <ng-content select='.tr-btn'></ng-content>
+  <!-- Si open est true alors on affiche close -->
+  <ng-content *ngIf='!open' select='.tr-btn-nav'></ng-content>
+  <ng-content *ngIf='open' select='.tr-btn-close'></ng-content>
 </span>
+
 
   <!-- ici on va projeter du contenu depuis le parent
  c'est à dire app.component.html
@@ -18,6 +21,7 @@
   <ng-content select='.tr-header'></ng-content>
 </header>
 
+<!-- property binding -->
 <main [ngClass]="{'close-aside' : !open}">
   <div class="shadow position-fixed">
   </div>
@@ -28,7 +32,8 @@
   </aside>
   <div class="page">
     <div class="contents">
-      Content
+      <!-- contenu dynamique -->
+      <ng-content select='.tr-router'></ng-content>
     </div>
     <footer>
       <ng-content select='.tr-footer'></ng-content>

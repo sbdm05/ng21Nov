@@ -4,9 +4,20 @@
 
 <!-- utilisation de app-ui -->
 <app-ui>
+  <app-icon-nav class='tr-btn-nav'></app-icon-nav>
+  <app-icon-close class='tr-btn-close'></app-icon-close>
   <!-- on veut projeter le composant app-header -->
+
+  <!-- ici, on commente car remplacé par icon -->
+  <!-- <button class='tr-btn'>Open/Close</button> -->
+
+  <!-- on projète la balise pour routing -->
+  <router-outlet class='tr-router'></router-outlet>
+  <!-- ici le composant correspondant à la route -->
+
+
   <app-header class='tr-header'></app-header>
-  <button class='tr-btn'>Open/Close</button>
   <app-nav class='tr-nav'></app-nav>
   <app-footer class='tr-footer'></app-footer>
 </app-ui>
+
