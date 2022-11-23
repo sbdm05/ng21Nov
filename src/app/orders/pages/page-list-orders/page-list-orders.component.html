@@ -1,4 +1,7 @@
-<p *ngFor="let item of collection">
+<!-- <p *ngFor="let item of collection">
   {{ item.client }}
-</p>
-
+</p> -->
+<app-template-full-width title='Liste des commandes'>
+  <!-- projeter un composant -->
+  <app-table-light [headers]='headers'></app-table-light>
+</app-template-full-width>

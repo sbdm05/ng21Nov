@@ -9,17 +9,28 @@ import { OrdersService } from '../../services/orders.service';
   styleUrls: ['./page-list-orders.component.scss'],
 })
 export class PageListOrdersComponent implements OnInit {
-
   // propriété pour stocker data
-  public collection !: Order[];
+  public collection!: Order[];
 
+  // liste des headers
+  public headers = [
+    'Action',
+    'Type',
+    'Client',
+    'NbJours',
+    'Tjm HT',
+    'Total HT',
+    'Total TTC',
+    'State',
+  ];
 
   // 1 - injecte le service
+  // injection de dépendances
   constructor(private ordersService: OrdersService) {
     // 2 on appelle la propriété collection
     this.ordersService.collection.subscribe((data) => {
       // placer le contenu de data dans une propriété en public
-      this.collection = data
+      this.collection = data;
       console.log(this.collection);
     });
   }
