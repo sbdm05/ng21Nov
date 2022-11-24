@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StateOrder } from 'src/app/core/enums/state-order';
 import { Order } from 'src/app/core/models/order';
 import { OrdersService } from '../../services/orders.service';
 
@@ -10,7 +11,13 @@ import { OrdersService } from '../../services/orders.service';
 })
 export class PageListOrdersComponent implements OnInit {
   // propriété pour stocker data
-  public collection!: Order[];
+  public collection!: Order[]; // false
+
+  // 1 - stocker enum dans propriétés states
+  // Object.values transforme un objet en tableau, donc on peut utiliser *ngFor
+  // Object.values = JS
+  public states = Object.values(StateOrder);
+  // 2 - itérer dans states
 
   // liste des headers
   public headers = [
@@ -36,4 +43,29 @@ export class PageListOrdersComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  // change detection
+  // calcul du montant HT et TTC
+  // public total(val: number, coef: number, tva?: number ): number{
+  //   console.log('déclenché'); // ???
+  //   if(tva){
+  //      return val * coef * (1+tva/100)
+  //    }
+  //    return val * coef;
+  // }
+
+  public changeState(obj: Order, event: Event) {
+    // console.log(event);
+    const target = event.target as HTMLSelectElement;
+    const state = target.value as StateOrder;
+    // console.log(state);
+    // nouvel état + objet
+    // appel vers le service - méthode put
+    this.ordersService.changeState(state, obj).subscribe((data) => {
+      // console.log(data);
+      // mettre à jour notre objet côté front
+       Object.assign(obj, data);
+      // obj = data;
+    });
+  }
 }

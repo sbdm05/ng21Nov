@@ -10,6 +10,14 @@ export class Order implements OrderI {
   client!: string;
   comment!: string;
   id!: number;
+  totalHT(): number {
+    return this.tjmHt * this.nbJours;
+  }
+  totalTTC(): number {
+    console.log('totalTTC déclenché')
+    return this.tjmHt * this.nbJours * ( 1 + this.tva/100);
+  }
+  // ajouter méthodes
   constructor(obj?: Partial<Order>) {
     if (obj) {
       // On fusionne avec méthode JS
