@@ -1,1 +1,13 @@
-<p>page-add-order works!</p>
+<app-template-full-width title='Ajouter une commande'>
+  <app-form
+  [init]='item'
+  (submitted)='onAdd($event)'
+  ></app-form>
+</app-template-full-width>
+
+<!--
+  créer new Order
+  passer à app-form
+  utiliser l'obj dans app-form pour initialiser les inputs
+
+ -->

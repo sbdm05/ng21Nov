@@ -7,6 +7,8 @@ import { PageAddOrderComponent } from './pages/page-add-order/page-add-order.com
 import { PageEditOrderComponent } from './pages/page-edit-order/page-edit-order.component';
 import { SharedModule } from '../shared/shared.module';
 import { TemplatesModule } from '../templates/templates.module';
+import { FormComponent } from './components/form/form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,8 +16,9 @@ import { TemplatesModule } from '../templates/templates.module';
     PageListOrdersComponent,
     PageAddOrderComponent,
     PageEditOrderComponent,
+    FormComponent,
   ],
-  imports: [CommonModule, OrdersRoutingModule, SharedModule],
+  imports: [CommonModule, OrdersRoutingModule, SharedModule, ReactiveFormsModule],
   providers: [{ provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR' }],
 })
 export class OrdersModule {}
