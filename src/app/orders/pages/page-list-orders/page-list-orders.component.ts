@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { NgIfContext } from '@angular/common';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { StateOrder } from 'src/app/core/enums/state-order';
@@ -14,6 +15,9 @@ import { OrdersService } from '../../services/orders.service';
 export class PageListOrdersComponent implements OnInit {
   // propriété pour stocker data
   public collection$!: Observable<Order[]>; // false
+
+  // @ViewChild('elseBlock')
+  // public elseBlock!: HTMLParagraphElement | TemplateRef<any>;
 
   // 1 - stocker enum dans propriétés states
   // Object.values transforme un objet en tableau, donc on peut utiliser *ngFor
@@ -43,6 +47,10 @@ export class PageListOrdersComponent implements OnInit {
     //   // console.log(this.collection);
     // });
     this.collection$ = this.ordersService.collection;
+    // Besoin d'un refreshCollection pour la situation où tu reviens sur la route
+    // sans méthodes add/put/delete
+    // dans ces cas-là, besoin de refaire un appel pour être sur d'avoir la dernière version de la bdd
+    // sinon, on garde ce qui est enregistré dans le BehaviorSubject
   }
 
   ngOnInit(): void {}

@@ -36,7 +36,6 @@ export class PageEditOrderComponent implements OnInit {
     // appeler dans le service la méthode update.subscribe
 
     this.ordersService.update(item).subscribe((data) => {
-      console.log(data);
       // redirection avec Router
       this.router.navigate(['orders']);
     });

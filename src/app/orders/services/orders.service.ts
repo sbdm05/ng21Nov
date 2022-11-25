@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject, tap } from 'rxjs';
 import { StateOrder } from 'src/app/core/enums/state-order';
 import { Order } from 'src/app/core/models/order';
 import { environment } from 'src/environments/environment';
@@ -69,13 +69,19 @@ export class OrdersService {
     const item = new Order(obj);
     // modifier l'état avec nouvel état
     item.state = state;
+    console.log(item)
     // return this.http.put('url/orders/id', obj)
     // backticks = altGr7
     return this.update(item);
   }
 
   public update(item: Order): Observable<Order> {
-    return this.http.put<Order>(`${this.urlApi}/orders/${item.id}`, item);
+    console.log(item, 'depuis service')
+    return this.http.put<Order>(`${this.urlApi}/orders/${item.id}`, item).pipe(
+      tap(()=>{
+        this.refreshCollection()
+      })
+    );
   }
 
   public add(obj: Order): Observable<Order> {
