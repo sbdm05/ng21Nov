@@ -1,7 +1,13 @@
 
-<!-- ici, on entre forcément dans la condition car l'observable est initialisé avec un tableau vide (BehaviorSubject) -->
+<!--
+ici, on entre forcément dans la condition car l'observable est initialisé avec un tableau vide dans le service (BehaviorSubject)
+on ne peut pas entrer dans le elseBlock
+-->
 <ng-container *ngIf="(collection$ | async) as collection">
-  <!-- ici, on affiche le template que si le tableau n'est pas vide -->
+<!--
+solution: on ajoute une condition
+ici, on affiche le template que si le tableau n'est pas vide
+-->
   <app-template-full-width title='Liste des commandes' *ngIf='collection.length > 0 else elseBlock' >
   <!-- projeter un composant -->
   <!-- property binding = association de propriétés -->
@@ -46,7 +52,9 @@
   </app-template-full-width>
 </ng-container>
 
-
+<!--
+Sinon on affiche ce template
+-->
 <ng-template #elseBlock >
   <p style='color:red'>Loading...</p>
 </ng-template>
