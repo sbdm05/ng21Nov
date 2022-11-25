@@ -15,12 +15,12 @@ export class TableLightComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.headers, 'ngOnInit');
-    console.log(this.collection) // ??? vient de l'api
+    // console.log(this.headers, 'ngOnInit');
+    // console.log(this.collection) // ??? vient de l'api
   }
 
   ngOnChanges(){
-    console.log(this.collection) // ??? vient de l'api
+    // console.log(this.collection) // ??? vient de l'api
   }
 
 

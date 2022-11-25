@@ -10,19 +10,21 @@ export class StateDirective {
   @HostBinding('class') tdClassName!: string;
 
   constructor() {
-    console.log(this.etat, 'app state déclenché'); // undefined
+    // console.log(this.etat, 'app state déclenché'); // undefined
   }
 
   //
   ngOnInit() {
     // attention, déclenché une seule fois
-    console.log(this.etat, 'app state déclenché'); //
+    // console.log(this.etat, 'app state déclenché'); //
+    // ne s'actualise pas
+    // this.tdClassName = `state-${this.etat.toLowerCase()}`;
 
   }
 
   ngOnChanges() {
-    console.log(this.etat, 'app state déclenché'); // ??
-    //
-    this.tdClassName = `state-${this.etat.toLowerCase()}`
+    // console.log(this.etat, 'app state déclenché'); // ??
+    // s'actualise
+    this.tdClassName = `state-${this.etat.toLowerCase()}`;
   }
 }

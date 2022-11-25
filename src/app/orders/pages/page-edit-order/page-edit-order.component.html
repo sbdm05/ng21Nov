@@ -1,1 +1,7 @@
-<p>page-edit-order works!</p>
+<!-- dans html ajouter full width + app-form -->
+<app-template-full-width title='Editer une commande' *ngIf='item'>
+  <app-form [init]="item" (submitted)='onEdit(item)'></app-form>
+</app-template-full-width>
+
+<p *ngIf='!item' >Loading...</p>
+

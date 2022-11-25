@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { StateOrder } from 'src/app/core/enums/state-order';
 import { Order } from 'src/app/core/models/order';
+import { environment } from 'src/environments/environment';
 
 // décorateur
 @Injectable({
@@ -10,14 +11,31 @@ import { Order } from 'src/app/core/models/order';
 })
 export class OrdersService {
   // propriété privée
-  private collection$!: Observable<Order[]>;
+  private collection$: BehaviorSubject<Order[]> = new BehaviorSubject<Order[]>(
+    []
+  );
+
+  private urlApi = environment.urlApi;
 
   constructor(private http: HttpClient) {
     // modifier le résultat de l'appel API
     // chaque objet devienne un Order, cad avec des méthodes
     // opérateur rxjs pipe
-    this.collection = this.http
-      .get<Order[]>('http://localhost:4006/orders')
+    // this.collection = this.http.get<Order[]>(`${this.urlApi}/orders`).pipe(
+    //   // transformer le flux
+    //   map((tab) => {
+    //     return tab.map((obj) => {
+    //       return new Order(obj); //
+    //     });
+    //   })
+    // );
+    this.refreshCollection();
+  }
+
+  // créer refreshCollection()
+  public refreshCollection() {
+    this.http
+      .get<Order[]>(`${this.urlApi}/orders`)
       .pipe(
         // transformer le flux
         map((tab) => {
@@ -25,21 +43,24 @@ export class OrdersService {
             return new Order(obj); //
           });
         })
-      );
+      )
+      .subscribe((data) => {
+        // alimenter un observable chaud
+        this.collection$.next(data);
+      });
   }
-  // toutes les propriétés et méthodes
-  // appel http
 
   // getter
   get collection(): Observable<Order[]> {
     // return propriété privée
+    this.refreshCollection();
     return this.collection$;
   }
 
-  // setter
-  set collection(col: Observable<Order[]>) {
-    this.collection$ = col;
-  }
+  // setter plus utilisé car refreshCollection
+  // set collection(col: Observable<Order[]>) {
+  //   this.collection$ = col;
+  // }
 
   // méthode pour changer l'état
   public changeState(state: StateOrder, obj: Order): Observable<Order> {
@@ -50,6 +71,31 @@ export class OrdersService {
     item.state = state;
     // return this.http.put('url/orders/id', obj)
     // backticks = altGr7
-    return this.http.put<Order>(`http://localhost:4006/orders/${item.id}`, item);
+    return this.update(item);
+  }
+
+  public update(item: Order): Observable<Order> {
+    return this.http.put<Order>(`${this.urlApi}/orders/${item.id}`, item);
+  }
+
+  public add(obj: Order): Observable<Order> {
+    // this.http.post('url/orders', item);
+    return this.http.post<Order>(`${this.urlApi}/orders`, obj);
+  }
+
+  // méthode pour retrouver un objet à partir de son id
+  public getItemById(id: number): Observable<Order> {
+    // this.http.get('url/orders/id')
+    return this.http.get<Order>(`${this.urlApi}/orders/${id}`);
+  }
+
+  // méthode delete
+  public delete(id: number): Observable<Order> {
+    return this.http.delete<Order>(`${this.urlApi}/orders/${id}`).pipe(
+      // déclenché refreshCollection
+      tap(() => {
+        this.refreshCollection();
+      })
+    );
   }
 }

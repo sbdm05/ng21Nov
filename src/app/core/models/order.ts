@@ -14,7 +14,7 @@ export class Order implements OrderI {
     return this.tjmHt * this.nbJours;
   }
   totalTTC(): number {
-    console.log('totalTTC déclenché')
+    // console.log('totalTTC déclenché')
     return this.tjmHt * this.nbJours * ( 1 + this.tva/100);
   }
   // ajouter méthodes

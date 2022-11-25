@@ -1,13 +1,18 @@
 <!-- <p *ngFor="let item of collection">
   {{ item.client }}
 </p> -->
-<app-template-full-width title='Liste des commandes' *ngIf='collection'>
+<app-template-full-width title='Liste des commandes' *ngIf="collection$ | async as collection; else elseBlock">
   <!-- projeter un composant -->
   <!-- property binding = association de propriétés -->
   <app-table-light [headers]='headers'>
     <!-- ici on projète la portion de tableau faisant réf à collection -->
         <tr *ngFor='let obj of collection'>
-          <td>Action</td>
+          <td>
+            <!-- utiliser icon-edit -->
+            <!-- ajouter un événement au clic -->
+            <app-icon-edit (click)='goToEdit(obj.id)'></app-icon-edit>
+            <app-icon-delete (click)='onDelete(obj.id)'></app-icon-delete>
+          </td>
           <!--  table data cells (td)-->
           <td>{{obj.typePresta | uppercase}}</td>
           <td>{{obj.client}}</td>
@@ -42,10 +47,4 @@
   ></app-btn>
 
 </app-template-full-width>
-
-
-
-<p *ngIf='!collection'>Loading...</p>
-
-
-
+<ng-template #elseBlock>Loading...</ng-template>

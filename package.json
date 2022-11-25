@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "jsonServer": "json-server -p 4006 --watch mock_db/db.json"
+    "jsonServer": "json-server -p 4006 --watch mock_db/db.json",
+    "compodoc": "compodoc -p tsconfig.json -o -s"
   },
   "private": true,
   "dependencies": {
@@ -19,6 +20,7 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "@compodoc/compodoc": "^1.1.19",
     "@fortawesome/angular-fontawesome": "^0.10.0",
     "@fortawesome/fontawesome-svg-core": "~1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",

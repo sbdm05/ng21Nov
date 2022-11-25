@@ -11,7 +11,7 @@ const routes: Routes = [
   // si l'utilisateur est sur /orders/add alors on affiche PageAddOrder
   { path: 'add', component: PageAddOrderComponent },
   // si l'utilisateur est sur /orders/edit alors on affiche PageEditOrder
-  { path: 'edit', component: PageEditOrderComponent },
+  { path: 'edit/:id', component: PageEditOrderComponent },
 ];
 
 @NgModule({

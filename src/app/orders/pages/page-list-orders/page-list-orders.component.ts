@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { StateOrder } from 'src/app/core/enums/state-order';
 import { Order } from 'src/app/core/models/order';
 import { OrdersService } from '../../services/orders.service';
@@ -11,7 +13,7 @@ import { OrdersService } from '../../services/orders.service';
 })
 export class PageListOrdersComponent implements OnInit {
   // propriété pour stocker data
-  public collection!: Order[]; // false
+  public collection$!: Observable<Order[]>; // false
 
   // 1 - stocker enum dans propriétés states
   // Object.values transforme un objet en tableau, donc on peut utiliser *ngFor
@@ -33,13 +35,14 @@ export class PageListOrdersComponent implements OnInit {
 
   // 1 - injecte le service
   // injection de dépendances
-  constructor(private ordersService: OrdersService) {
+  constructor(private ordersService: OrdersService, private router: Router) {
     // 2 on appelle la propriété collection
-    this.ordersService.collection.subscribe((data) => {
-      // placer le contenu de data dans une propriété en public
-      this.collection = data;
-      console.log(this.collection);
-    });
+    // this.ordersService.collection.subscribe((data) => {
+    //   // placer le contenu de data dans une propriété en public
+    //   this.collection = data;
+    //   // console.log(this.collection);
+    // });
+    this.collection$ = this.ordersService.collection;
   }
 
   ngOnInit(): void {}
@@ -64,8 +67,24 @@ export class PageListOrdersComponent implements OnInit {
     this.ordersService.changeState(state, obj).subscribe((data) => {
       // console.log(data);
       // mettre à jour notre objet côté front
-       Object.assign(obj, data);
+      Object.assign(obj, data);
       // obj = data;
+    });
+  }
+
+  public goToEdit(id: number) {
+    // console.log(id, 'icône cliquée')
+    // rediriger avec Router (injection de dépendances dans constructor)
+    // orders/edit/id
+    this.router.navigate(['orders', 'edit', id]);
+  }
+
+  public onDelete(id: number) {
+    console.log(id);
+    // Etapes
+    // appeler une méthode dans le service delete().subscribe()
+    this.ordersService.delete(id).subscribe((data) => {
+      console.log(data);
     });
   }
 }

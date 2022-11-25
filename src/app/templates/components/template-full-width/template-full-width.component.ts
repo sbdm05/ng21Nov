@@ -9,17 +9,17 @@ export class TemplateFullWidthComponent implements OnInit {
   @Input() title!: string;
 
   constructor() {
-    console.log(this.title); // ???
+    // console.log(this.title); // ???
   }
 
   // cycle de vie du composant
   ngOnInit() {
-    console.log(this.title); // ???
+    // console.log(this.title); // ???
   }
 
   // cycle de vie du composant
   ngOnChanges() {
-    console.log(this.title, 'onchanges'); // ???
+    // console.log(this.title, 'onchanges'); // ???
   }
   // cycle de vie du composant
   // ngDoCheck() {
@@ -27,6 +27,6 @@ export class TemplateFullWidthComponent implements OnInit {
   // }
 
   ngOnDestroy() {
-    console.log('déclenché');
+    // console.log('déclenché');
   }
 }

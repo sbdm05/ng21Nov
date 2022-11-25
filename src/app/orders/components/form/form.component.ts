@@ -20,7 +20,9 @@ export class FormComponent implements OnInit {
 
   public states = Object.values(StateOrder);
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+    // ici this.init est undefined
+  }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -38,7 +40,7 @@ export class FormComponent implements OnInit {
   public onSubmit() {
       console.log(this.form.value, 'validé');
       // déclenché submitted
-      // très proche des observables
+      // très proche des observables extends Subject()
       this.submitted.emit(this.form.value);
   }
 }
